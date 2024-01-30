@@ -8,10 +8,10 @@
 
 <body>
     <p id="root">
-        <input type="button" value="点我加1" @click="increA">
+        <input type="button" value="点我加1" @click="incre('a')">
         当前a的值: {{num.a}}
         <br>
-        <input type="button" value="点我加1" @click="increB">
+        <input type="button" value="点我加1" @click="incre('b')">
         当前b的值: {{num.b}}
     </p>
     <script type="text/javascript" src="./js/vue.js"></script>
@@ -25,11 +25,8 @@
                 }
             },
             methods: {
-                increA() {
-                    this.num.a++;
-                },
-                increB() {
-                    this.num.b++;
+                incre(t) {
+                    this.num[t]++;
                 }
             },
             watch: {
