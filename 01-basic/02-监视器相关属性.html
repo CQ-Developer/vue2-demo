@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>监视器相关属性</title>
+</head>
+
+<body>
+    <p id="root">
+        <input type="button" value="点我加1" @click="increA">
+        当前a的值: {{num.a}}
+        <br>
+        <input type="button" value="点我加1" @click="increB">
+        当前b的值: {{num.b}}
+    </p>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: "#root",
+            data: {
+                num: {
+                    a: 1,
+                    b: 1
+                }
+            },
+            methods: {
+                increA() {
+                    this.num.a++;
+                },
+                increB() {
+                    this.num.b++;
+                }
+            },
+            watch: {
+                /**
+                 * deep
+                 * 默认不开启深度检测
+                 * 深度检测可以检测对象内部的改变
+                 * 
+                 * immediate
+                 * 在页面加载完成后，立即触发一次回调函数
+                 * 
+                 * @see https://v2.cn.vuejs.org/v2/api/#vm-watch
+                 */
+                num: {
+                    deep: true,
+                    immediate: true,
+                    handler(ob) {
+                        console.log("发生改变", ob)
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
