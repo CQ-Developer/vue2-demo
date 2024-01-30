@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>class样式-字符串</title>
+    <style>
+        .basic {
+            width: 200px;
+            height: 200px;
+        }
+        .happy {
+            background-color: red;
+        }
+        .sad {
+            background-color: green;
+        }
+        .normal {
+            background-color: skyblue;
+        }
+    </style>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <div class="basic" :class="mood" @click="change"></div>
+    </div>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+
+        const vm = new Vue({
+            el: "#root",
+            data: {
+                mood: "normal"
+            },
+            methods: {
+                change() {
+                    const arr = ["happy", "sad", "normal"]
+                    this.mood = arr[Math.floor(Math.random() * 3)]
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
