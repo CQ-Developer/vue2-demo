@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>基础用法</title>
+    <style>
+        .box1 {
+            width: 200px;
+            height: 200px;
+            background-color: skyblue;
+            text-align: center;
+            line-height: 200px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 插值语法 -->
+        <p>{{ info }}</p>
+
+        <!-- 插值语法：表达式 -->
+        <p>{{ isHot ? "热" : "冷" }}</p>
+
+        <p>
+            <!-- v-bind 单向绑定 -->
+            <a v-bind:href="url">百度</a>
+            <!-- v-bind 单向绑定 简写 -->
+            <a :href="url">百度</a>
+        </p>
+
+        <p>
+            <!-- v-model 双向绑定 一般用于表单控件 -->
+            <input type="text" v-model:value="info" disabled>
+            <!-- v-model 双向绑定 简写 -->
+            <input type="text" v-model="info">
+        </p>
+
+        <p>
+            <!-- v-on 绑定事件 -->
+            <input type="button" value="翻转字符串" v-on:click="reverse">
+        </p>
+
+        <p>
+            <!-- v-on 绑定事件 简写 传递参数 -->
+            <input type="button" value="sayHi" @click="sayHi('hi')">
+            <!-- v-on 绑定事件 简写 传递参数+事件 -->
+            <input type="button" value="sayHello" @click="sayHello($event, 'hello')">
+        </p>
+
+        <!-- 事件修饰符 .stop 阻止事件冒泡 -->
+        <div class="box1" @click="stopOut">
+            <input type="button" value="点我" @click.stop="stopIn">
+        </div>
+
+        <p>
+            <!-- 事件修饰符 .prevent 阻止元素默认行为 -->
+            <a :href="url" @click.prevent="preventDemo">百度</a>
+        </p>
+
+        <!-- 事件修饰符 .self 只有当event.target是自身时才触发 -->
+        <div class="box1" @click.self="selfOut">
+            <input type="button" value="点我" @click="selfIn">
+        </div>
+
+        <p>
+            <!-- 事件修饰符 .once -->
+            <input type="button" value="我只做一次" @click.once="onceDemo">
+        </p>
+
+        <!-- 下面两个事件不写demo了，注意事件修饰符可以定义多个，比如@click.prevent.stop -->
+        <!-- 事件修饰符 .capture -->
+        <!-- 事件修饰符 .passive -->
+
+        <p>
+            <!-- 键盘事件 keyup 和 keydown-->
+            <input type="text" v-model="info" @keydown="keyDemo">
+            <!-- 按键修饰符 .enter 只会对enter键响应事件-->
+            <input type="text" v-model="info" @keyup.enter="keyEnterDemo">
+            <!-- 按键修饰符 .tab .delete .esc .space .up .down .left .right -->
+            <!-- 系统按键修饰符 .ctrl .alt .shift .meta -->
+        </p>
+
+        <p>
+            <!-- 按键修饰符 .exact 可以将键盘事件和其他事件组合使用 -->
+            <input type="button" value="按住ctrl点我" @click.ctrl.exact="exactDemo">
+            <input type="button" value="不要按住任何系统修时间点我" @click.exact="exactDemo">
+        </p>
+
+        <p>
+            <!-- 计算属性 -->
+            <!-- 通过 computed 配置对象配置的 numAdd 方法，是一个计算属性 -->
+            <input type="number" v-model.number="a"> + <input type="number" v-model.number="b"> = <input type="number" disabled :value="numAdd">
+        </p>
+
+        <p>
+            <!-- 监听属性 监听器和计算属性非常相似，但是监听器适合执行异步或开销较大的操作，并且可以设置属性的中间状态 -->
+            问一个问题：
+            <input type="text" v-model="question">
+            <br>
+            答案：{{ answer }}
+        </p>
+    </div>
+
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        Vue.config.productionTip = false
+        const vm = new Vue({
+            el: "#root",
+            data: {
+                info: "hello vue",
+                isHot: true,
+                url: "https://www.baidu.com",
+                a: 1,
+                b: 1,
+                question: "",
+                answer: "等待问题中..."
+            },
+            methods: {
+                reverse(e) {
+                    console.log("我被点击了", e.target)
+                    this.info = this.info.split("").reverse().join("")
+                },
+                sayHi(value) {
+                    alert(value)
+                },
+                sayHello(e, value) {
+                    console.log(e.target)
+                    alert(value)
+                },
+                stopOut() {
+                    alert("out")
+                },
+                stopIn() {
+                    alert("in")
+                },
+                preventDemo() {
+                    alert("百度")
+                },
+                onceDemo() {
+                    alert("only once")
+                },
+                selfOut() {
+                    alert("out")
+                },
+                selfIn() {
+                    alert("in")
+                },
+                keyDemo(e) {
+                    console.log(e.key, e.keyCode)
+                },
+                keyEnterDemo() {
+                    alert("输入内容: [" + this.info + "]")
+                },
+                exactDemo() {
+                    alert("我被触发了")
+                }
+            },
+            computed: {
+                numAdd() {
+                    return this.a + this.b
+                }
+            },
+            watch: {
+                question(cur, pre) {
+                    console.log(pre, cur)
+                    this.answer = "思考中..."
+                    // 执行其他核心逻辑...
+                }
+            }
+        })
+
+        /**
+         * 第2中定义监听属性的方式
+         * @see https://v2.cn.vuejs.org/v2/api/#vm-watch
+         */
+        vm.$watch("isHot", function(newValue, oldValue) {
+            console.log(newValue, oldValue)
+        },
+        {
+            immediate: true
+        })
+    </script>
+</body>
+
+</html>
