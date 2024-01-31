@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>监视对象原理</title>
+</head>
+
+<body>
+    <!-- 一个简单的双向绑定 -->
+    <script type="text/javascript">
+        // 原始数据
+        let data = { name: '马老师', age: 32 }
+
+        // 观察者
+        const obs = new Observer(data)
+
+        // vm
+        let vm = {}
+        vm._data = data = obs
+
+        function Observer(obj) {
+            const properties = Object.keys(obj)
+            properties.forEach(prop => {
+                Object.defineProperty(this, prop, {
+                    get() {
+                        return obj[prop]
+                    },
+                    set(value) {
+                        obj[prop] = value
+                    }
+                })
+            })
+        }
+    </script>
+</body>
+
+</html>
