@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>列表渲染-key</title>
+</head>
+
+<body>
+    <!-- 
+        :key 的重要性涉及列表项的更新，使用数据的唯一标识而不是数组下标
+        参考：https://v2.vuejs.org/v2/guide/list.html#Maintaining-State
+        不写 :key 时，默认使用的就是索引作为节点的唯一标识
+     -->
+    <div id="root">
+        <h2>错误示例</h2>
+        <ul>
+            <li v-for="(persion, index) in persons" :key="index">
+                {{ persion.name }} - {{ persion.age }}
+                <input type="text">
+            </li>
+        </ul>
+        <h2>正确示例</h2>
+        <ul>
+            <li v-for="persion in persons" :key="persion.id">
+                {{ persion.name }} - {{ persion.age }}
+                <input type="text">
+            </li>
+        </ul>
+        <button @click.once="addPersion">添加赵六</button>
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                persons: [
+                    { id: '001', name: '张三', age: 18 },
+                    { id: '002', name: '李四', age: 23 },
+                    { id: '003', name: '王五', age: 38 }
+                ]
+            },
+            methods: {
+                addPersion() {
+                    const p = { id: '004', name: '赵六', age: 44 }
+                    // 注意这里需要在数组的前面加元素才会出现问题
+                    // 如果在数组中的后面追加元素，不会出现问题
+                    this.persons.unshift(p)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
