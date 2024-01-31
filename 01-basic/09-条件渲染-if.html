@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染v-if</title>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 
+            v-if通过表达式结果true或false控制元素是否被渲染到html结构中
+            也就是真正的条件渲染，也就是说如果v-if的结果为false时
+            html文档中不会存在该元素
+
+            v-if
+            v-else-if
+            v-else
+            中间不能包含其他元素，必须连续
+         -->
+        <p v-if="n == 1">Java</p>
+        <p v-else-if="n == 2">JavaScript</p>
+        <p v-else-if="n == 3">Python</p>
+        <p v-else>nothing</p>
+        <button @click="incre(1)">+1</button>
+
+        <!-- 
+            当需要让一个条件成立同时渲染多个元素时
+            可以使用template元素进行包裹
+            这样的好处是不会改变html文档的结构
+            因为template元素不会被渲染到原始的html文档结构中
+         -->
+        <template v-if="n == 4">
+            <p>Java</p>
+            <p>JavaScript</p>
+            <p>Python</p>
+        </template>
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                n: 0
+            },
+            methods: {
+                incre(step) {
+                    this.n += step
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
