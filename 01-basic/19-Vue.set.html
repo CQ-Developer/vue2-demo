@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Vue set</title>
+</head>
+
+<body>
+    <div id="root">
+        <h2>姓名: {{ person.name }}</h2>
+        <h2>年龄: {{ person.age }}</h2>
+        <h2 v-if="person.gender">性别: {{ person.gender }}</h2>
+        <input type="button" value="添加性别" @click.once="addGender">
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                person: {
+                    name: '马保国',
+                    age: 60
+                }
+            },
+            methods: {
+                addGender() {
+                    // 通过Vue.set添加一个响应式的属性
+                    // Vue.set 和 vue.$set 是一样的
+                    this.$set(this.person, 'gender', '男')
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
