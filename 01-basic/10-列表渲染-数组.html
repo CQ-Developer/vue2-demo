@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>列表渲染-数组</title>
+</head>
+
+<body>
+    <div id="root">
+        <ul>
+            <!-- 
+                index可以省略，写为 v-for="persion in persions"
+             -->
+            <li v-for="(persion, index) in persons" :key="persion.id">
+                {{index}} - {{persion.name}} - {{persion.age}}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                persons: [
+                    { id: '001', name: '张三', age: 18 },
+                    { id: '002', name: '李四', age: 23 },
+                    { id: '003', name: '王五', age: 38 }
+                ]
+            }
+        })
+    </script>
+</body>
+
+</html>

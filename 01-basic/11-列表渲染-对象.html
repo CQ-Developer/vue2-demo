@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>列表渲染-对象</title>
+</head>
+
+<body>
+    <div id="root">
+        <ul>
+            <!-- 
+                name和index可以省略，写为 v-for="value in person"
+             -->
+            <li v-for="(value, name, index) in person" :key="index">
+                {{name}} : {{value}}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                person: {
+                    name: '张三',
+                    age: 23,
+                    address: '江苏省南京市',
+                    gender: '男',
+                    nationnality: '中国'
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
