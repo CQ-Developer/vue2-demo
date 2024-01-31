@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>条件渲染v-show</title>
+</head>
+<body>
+    <div id="root">
+        <!-- 
+            v-show 实际上只是根据表达式的返回值位true或false，
+            在元素身上添加了display: none样式，
+            实际上该元素本身还是存在于html结构中
+         -->
+        <h1 v-show="isShow">你好</h1>
+        <button @click="showOrNot">隐藏/展示</button>
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                isShow: true
+            },
+            methods: {
+                showOrNot() {
+                    this.isShow = !this.isShow
+                }
+            }
+        })
+    </script>
+</body>
+</html>
