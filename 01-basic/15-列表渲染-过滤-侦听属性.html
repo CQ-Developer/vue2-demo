@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>列表渲染-过滤-侦听属性</title>
+</head>
+
+<body>
+    <div id="root">
+        <input type="text" v-model="key">
+        <ul>
+            <li v-for="person in filteredPersions" :key="person.id">
+                {{ person.name }} | {{ person.age }} | {{ person.gender }}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                key: '',
+                persons: [
+                    { id: '01', name: '马冬梅', age: 18, gender: '女' },
+                    { id: '02', name: '周冬雨', age: 19, gender: '女' },
+                    { id: '03', name: '周杰伦', age: 20, gender: '男' },
+                    { id: '04', name: '温兆伦', age: 21, gender: '男' }
+                ],
+                filteredPersions: []
+            },
+            watch: {
+                key: {
+                    // 这里可以初始化filteredPersions数组
+                    immediate: true,
+                    handler(newValue) {
+                        this.filteredPersions = this.persons.filter(p => p.name.indexOf(newValue) != -1)
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
