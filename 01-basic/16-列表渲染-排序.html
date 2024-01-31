@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>列表渲染-排序</title>
+</head>
+
+<body>
+    <div id="root">
+        <input type="text" v-model="searchKey">
+        <input type="button" value="年龄升序" @click="changeSortType(1)">
+        <input type="button" value="年龄降序" @click="changeSortType(2)">
+        <input type="button" value="取消排序" @click="changeSortType(0)">
+        <ul>
+            <li v-for="person in filteredPersions" :key="person.id">
+                {{ person.name }} | {{ person.age }} | {{ person.gender }}
+            </li>
+        </ul>
+    </div>
+    <script type="text/javascript" src="./js/vue.js"></script>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                searchKey: '',
+                sortType: 0,
+                persons: [
+                    { id: '01', name: '马冬梅', age: 41, gender: '女' },
+                    { id: '02', name: '周冬雨', age: 33, gender: '女' },
+                    { id: '03', name: '周杰伦', age: 64, gender: '男' },
+                    { id: '04', name: '温兆伦', age: 18, gender: '男' }
+                ]
+            },
+            computed: {
+                filteredPersions() {
+                    const arr = this.persons.filter(n => n.name.indexOf(this.searchKey) != -1)
+                    if (this.sortType) {
+                        arr.sort((a, b) => this.sortType == 1 ? a.age - b.age : b.age - a.age)
+                    }
+                    return arr
+                }
+            },
+            methods: {
+                changeSortType(type) {
+                    this.sortType = type
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
