@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>过滤器</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>使用方法实现</h2>
+        <p>当前时间: {{ formatTimestamp() }}</p>
+
+        <h2>使用计算属性实现</h2>
+        <p>当前时间: {{ computedFormatTimestamp }}</p>
+
+        <!-- 
+            过滤器可以写多个比如 {{ timestamp | filter1 | filter2 | filter3 }}
+         -->
+        <h2>使用实例过滤器实现</h2>
+        <p>当前时间: {{ timestamp | instanceTimestampFormatter }}</p>
+
+        <h2>使用全局过滤器实现</h2>
+        <p>当前时间: {{ timestamp | globalTimestampFormatter }}</p>
+    </div>
+    <script type="text/javascript">
+        function formatDate(date) {
+            const year = date.getFullYear().toString()
+            const month = date.getMonth().toString().padStart(2, '0')
+            const day = date.getDate().toString().padStart(2, '0')
+            const hour = date.getHours().toString().padStart(2, '0')
+            const minute = date.getMinutes().toString().padStart(2, '0')
+            const second = date.getSeconds().toString().padStart(2, '0')
+            return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second
+        }
+
+        // 定义全局过滤器
+        Vue.filter('globalTimestampFormatter', value => formatDate(new Date(value)))
+
+        new Vue({
+            el: '#root',
+            data: {
+                timestamp: 1706750245158
+            },
+            methods: {
+                formatTimestamp() {
+                    return formatDate(new Date(this.timestamp))
+                }
+            },
+            computed: {
+                computedFormatTimestamp() {
+                    return formatDate(new Date(this.timestamp))
+                }
+            },
+            // 定义实例过滤器
+            filters: {
+                instanceTimestampFormatter(value) {
+                    return formatDate(new Date(value))
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
