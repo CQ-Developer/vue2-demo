@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>全局自定义指令</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root1">
+        <p v-hello="a"></p>
+    </div>
+    <div id="root2">
+        <p v-hello="b"></p>
+    </div>
+    <script type="text/javascript">
+        /**
+         * [全局]自定义指令
+         * 
+         * 可以在多个vue实例之间共享
+         * 必须在创建vue实例前定义
+         * 这里也可以指定详细的生命周期函数：bind()、inserted()、update() 等
+         */
+        Vue.directive('hello', (element, binding) => element.innerText = binding.value)
+
+        // vue1
+        new Vue({
+            el: '#root1',
+            data: {
+                a: 'hello, i am vue 1'
+            }
+        })
+
+        // vue2
+        new Vue({
+            el: '#root2',
+            data: {
+                b: 'hello, i am vue 2'
+            }
+        })
+    </script>
+</body>
+
+</html>
