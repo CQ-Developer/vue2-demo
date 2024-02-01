@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>当前值：<span v-text="n"></span></h2>
+        <!-- 自定义指令v-big -->
+        <h2>放大十倍：<span v-big="n"></span></h2>
+        <button @click="n++">+1</button>
+    </div>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                n: 1
+            },
+            /**
+             * [局部]自定义指令
+             * 
+             * 自定义指令的调用时机
+             * 1、指令于元素成功绑定时
+             * 2、指令所在的模板被重新编译时，也就说只要所在模板被重新编译了，即使修改的不是n的值，也会触发指定的执行
+             */
+            directives: {
+                big(element, bind) {
+                    element.innerText = bind.value * 10
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
