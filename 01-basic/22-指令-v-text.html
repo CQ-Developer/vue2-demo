@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>v-text</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 和插值语法相同 -->
+        <h2>使用v-text插入文本</h2>
+        <p v-text="textStr"></p>
+
+        <!-- 和插值语法不同 -->
+        <h2>无法使用v-test拼接文本</h2>
+        <p v-text="textStr">你好，</p>
+
+        <!-- 注意 -->
+        <h2>无法使用v-text内敛html</h2>
+        <p v-text="htmlStr"></p>
+    </div>
+    <script text="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                textStr: '我是一段文本',
+                htmlStr: '<span>你好我是一段html</span>'
+            }
+        })
+    </script>
+</body>
+
+</html>
