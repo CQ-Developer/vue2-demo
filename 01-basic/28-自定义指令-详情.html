@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>自定义指令详情</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <h2>当前值：<span v-text="n"></span></h2>
+        <!-- 自定义指令v-big -->
+        <label for="demo">放大十倍：</label>
+        <input type="text" v-ten-times="n">
+        <br>
+        <button @click="n++">+1</button>
+    </div>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                n: 1
+            },
+            directives: {
+                /**
+                 * 指定指令的名称
+                 * 这种多个字符连写的方式需要用字符串
+                 * 不要使用驼峰命名
+                 */
+                'ten-times': {
+                    /**
+                     * 在指令和元素绑定时被调用
+                     */
+                    bind(element, binding) {
+                        console.log("bind被调用了")
+                        element.value = binding.value * 10
+                        // 注意此时的this是谁
+                        console.log(this)
+                    },
+                    /**
+                     * 在元素被编译后插入html文档后执行
+                     * 有些操作比如说focus()只有在元素被插入文档后才能执行
+                     * 典型的还有查找父元素、兄弟元素等操作
+                     */
+                    inserted(element, binding) {
+                        console.log("inserted被调用了")
+                        element.focus()
+                    },
+                    /**
+                     * 在模板被重新编译时执行
+                     */
+                    update(element, binding) {
+                        console.log("update被调用了")
+                        element.value = binding.value * 10
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
