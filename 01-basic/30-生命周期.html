@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>生命周期钩子函数</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <h1 id="root" :style="{ opacity: op }">{{ msg }}</h1>
+    <script type="text/javascript">
+        new Vue({
+            el: '#root',
+            data: {
+                msg: '逐渐透明，周而复始',
+                op: 1
+            },
+            /**
+             * 生命周期钩子函数参考：
+             * https://v2.cn.vuejs.org/v2/guide/instance.html#生命周期图示
+             * 
+             * 在生命周期钩子函数中，vue维护了this指向vue实例对象
+             */
+            mounted() {
+                console.log(this)
+                setInterval(() => {
+                    this.op -= 0.016
+                    if (this.op <= 0) {
+                        this.op = 1
+                    }
+                }, 16)
+            }
+        })
+    </script>
+</body>
+
+</html>
