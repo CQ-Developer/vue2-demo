@@ -14,7 +14,8 @@
             el: '#root',
             data: {
                 msg: '逐渐透明，周而复始',
-                op: 1
+                op: 1,
+                up: false
             },
             /**
              * 生命周期钩子函数参考：
@@ -25,9 +26,16 @@
             mounted() {
                 console.log(this)
                 setInterval(() => {
-                    this.op -= 0.016
-                    if (this.op <= 0) {
-                        this.op = 1
+                    if (this.up) {
+                        this.op += 0.0166
+                        if (this.op >= 1) {
+                            this.up = !this.up
+                        }
+                    } else {
+                        this.op -= 0.0166
+                        if (this.op <= 0) {
+                            this.up = !this.up
+                        }
                     }
                 }, 16)
             }
