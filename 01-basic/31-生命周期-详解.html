@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>周明周期详情</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <p>num = {{ num }}</p>
+        <button @click="addOne">+10</button>
+    </div>
+    <script type="text/javascript">
+        /**
+         * 生命周期的详情直接参考图
+         * https://v2.vuejs.org/v2/guide/instance.html#Lifecycle-Diagram
+         * 
+         * 生命周期钩子
+         * https://v2.vuejs.org/v2/api/#Options-Lifecycle-Hooks
+         */
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                num: 0
+            },
+            methods: {
+                addOne() {
+                    this.num += 10
+                }
+            },
+            beforeCreate() {
+                console.log("beforeCreate", this)
+            },
+            created() {
+                console.log("created", this)
+            },
+            beforeMount() {
+                console.log("beforeMount", this)
+            },
+            // 重要
+            mounted() {
+                this.addOneTimer = setInterval(() => this.num++, 1000)
+                console.log("mounted", this)
+            },
+            beforeUpdate() {
+                console.log("beforeUpdate", this)
+            },
+            updated() {
+                console.log("updated", this)
+            },
+            // 重要
+            beforeDestroy() {
+                clearInterval(this.addOneTimer)
+                console.log("beforeDestroy", this)
+            },
+            destroyed() {
+                console.log("destroyed", this)
+            }
+        })
+    </script>
+</body>
+
+</html>
