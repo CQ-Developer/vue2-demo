@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>组件</title>
+    <script type="text/javascript" src="./js/vue.js"></script>
+</head>
+
+<body>
+    <div id="root">
+        <!-- 使用全局组件 -->
+        <Hello></Hello>
+    </div>
+
+    <div id="root1">
+        <h2>{{ title }}</h2>
+        <!-- 使用局部组件 -->
+        <School></School>
+    </div>
+
+    <div id="root2">
+        <h2>{{ title }}</h2>
+        <!-- 使用局部组件 -->
+        <Student></Student>
+    </div>
+
+    <script type="text/javascript">
+        /**
+         * 全局注册Hello组件
+         * 可以传入通过Vue.extend()创建的组件对象
+         * 也可以传一个自定义对象，Vue会自动调用Vue.extend()
+         */
+        Vue.component('Hello', {
+            template: `
+            <div>
+                <h1 @click="hello">{{ msg }}</h1>
+            </div>
+            `,
+            data() {
+                return {
+                    msg: 'Welcome to My Web!'
+                }
+            },
+            methods: {
+                hello() {
+                    alert('恭喜发财')
+                }
+            }
+        })
+
+        // 创建学校组件
+        const a = Vue.extend({
+            template: `
+            <div>
+                <h3>{{ name }}</h3>
+                <p>{{ address }}</p>
+            </div>
+            `,
+            data() {
+                return {
+                    name: '中国矿业大学徐海学院',
+                    address: '中国江苏省徐州市'
+                }
+            }
+        })
+
+        // 创建学生组件
+        const b = Vue.extend({
+            template: `
+            <div>
+                <h3>{{ name }}</h3>
+                <p>{{ age }}</p>
+            </div>
+            `,
+            data() {
+                return {
+                    name: '张三',
+                    age: 19
+                }
+            }
+        })
+
+        new Vue({
+            el: '#root'
+        })
+
+        new Vue({
+            el: '#root1',
+            data: {
+                title: '这是学校的信息'
+            },
+            /**
+             * 注册组件，被这种方式注册的组件是局部组件
+             */
+            components: {
+                School: a
+            }
+        })
+
+        new Vue({
+            el: '#root2',
+            data: {
+                title: '这是学生信息'
+            },
+            /**
+             * 注册组件，被这种方式注册的组件是局部组件
+             */
+            components: {
+                Student: b
+            }
+        })
+    </script>
+</body>
+
+</html>
