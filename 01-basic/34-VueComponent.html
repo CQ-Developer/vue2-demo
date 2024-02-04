@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VueComponent</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const Hello = Vue.extend({
+            template: `
+            <div>{{ msg }}</div>
+            `,
+            data() {
+                return {
+                    msg: 'hello vue'
+                }
+            }
+        })
+        const vm = new Vue({
+            el: '#root'
+        })
+        // 注意这里：理解VueComponent和Vue之间的关系
+        console.log(Hello.prototype.prototype == vm.prototype)
+    </script>
+</body>
+</html>
