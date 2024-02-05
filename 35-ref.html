@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>通过ref获取DOM节点</title>
+</head>
+<body>
+    <div id="app">
+        <p ref="p1">{{ msg }}</p>
+        <Greet ref="g1"></Greet>
+        <button @click="checkDOM">查看DOM节点</button>
+    </div>
+    <script src="./js/vue.js"></script>
+    <script>
+        const Greet = Vue.extend({
+            template: `
+            <div>
+                <p>{{ msg }}</p>
+            </div>
+            `,
+            data() {
+                return {
+                    msg: '恭喜发财'
+                }
+            }
+        })
+        new Vue({
+            el: '#app',
+            data: {
+                msg: '新年快乐'
+            },
+            components: {
+                Greet
+            },
+            methods: {
+                checkDOM() {
+                    // p1是原生DOM节点
+                    console.log(this.$refs.p1)
+                    // g1是VueComponent实例
+                    console.log(this.$refs.g1)
+                }
+            }
+        })
+    </script>
+</body>
+</html>
