@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>localStorage</title>
+</head>
+
+<body>
+    <button onclick="setObj()">添加对象</button>
+    <button onclick="getObj()">获取对象</button>
+    <button onclick="delObj()">删除对象</button>
+    <button onclick="clearStorage()">清空</button>
+    <!--
+        可以通过vue的watch结合localStorage
+        将一些数据存储在本地
+    -->
+    <script>
+        const tom = {
+            name: 'Tome',
+            age: 18
+        }
+
+        // 添加对象
+        function setObj() {
+            localStorage.setItem('tom', JSON.stringify(tom))
+        }
+
+        // 获取对象
+        function getObj() {
+            const obj = localStorage.getItem('tom')
+            console.log(JSON.parse(obj))
+        }
+
+        // 删除对象
+        function delObj() {
+            localStorage.removeItem('tom')
+        }
+
+        // 清空
+        function clearStorage() {
+            localStorage.clear()
+        }
+    </script>
+</body>
+
+</html>
